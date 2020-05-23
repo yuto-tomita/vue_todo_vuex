@@ -31,7 +31,7 @@ export default new Vuex.Store({
 			state.nextTaskId++
 		},
 		editTodo (state, { editContent }) {
-			state.todos.content = editContent
+			editContent = state.todos.content
 		}
 	}
 })

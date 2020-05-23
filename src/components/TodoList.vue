@@ -27,15 +27,18 @@
 				<template v-slot:footer>
 					期限：{{ todo.timelimit }}
 				</template>
+			
 			</b-card>
     </b-row>
 		<transition name="modal">
+			<!-- v-modelでモーダルの入力フォームの値を受けとる -->
 			<show-modal 
 			  :id="todoId"
 			  :timelimit="todoTimelimit"
 				:content="todoContent"
 			  v-if="showContent" 
 				@close="modalClose"
+				v-model="editContent"
 			/>
 		</transition>
   </b-container>
@@ -54,7 +57,8 @@ export default {
 			showModal: false,
 			editUserContent: '',
 			showContent: false,
-			todoItem: ''
+			todoItem: '',
+			editContent: '',
 		}
 	},
 	computed: {
