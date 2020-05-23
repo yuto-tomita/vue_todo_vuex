@@ -9,10 +9,12 @@
 				v-for="todo in todos" 
 				:key="todo.id" 
 				:content="todo.content"
+				:timelimit="todo.timelimit"
 			>
 			  <template v-slot:header>
-					<b-button variant="outline-info" v-b-modal.modal-prevent-closing>
+					<b-button variant="outline-info" @click="testOpenModal(todo)">
 						編集
+						<!-- @click="this.$bvModal.show(todo)" -->
 					</b-button>
 					<b-button variant="outline-danger">
 						削除
@@ -27,24 +29,32 @@
 				</template>
 			</b-card>
     </b-row>
+		<transition name="modal">
+			<show-modal 
+			  :id="todoId"
+			  :timelimit="todoTimelimit"
+				:content="todoContent"
+			  v-if="showContent" 
+				@close="modalClose"
+			/>
+		</transition>
   </b-container>
-	<b-modal id="modal-prevent-closing" title="編集">
-		<b-form-input>
-
-		</b-form-input>
-	</b-modal>
 </div>
 </template>
 
 <script>
-
-
+import ShowModal from './ShowModal'
 export default {
 	name: 'todo-list',
+	components: {
+		ShowModal,
+	},
   data () {
     return {
 			showModal: false,
-			
+			editUserContent: '',
+			showContent: false,
+			todoItem: ''
 		}
 	},
 	computed: {
@@ -53,14 +63,32 @@ export default {
 		}
 	},
 	methods: {
-		editTodo () {
-
+		testOpenModal (todo) {
+			this.showContent = true
+			this.todoId = todo.id
+			this.todoTimelimit = todo.timelimit
+			this.todoContent = todo.content
+			// this.$bvModal.show('test-open-modal')
+		},
+    // testModal (id) {
+		// 	this.$bvModal.show('test-open-modal', id)
+		// },
+		modalClose () {
+			this.showContent = false
 		}
 	}
 }
 </script>
 
 <style>
+  .modal-enter-active, .modal-leave-active {
+		transition: opacity .5s;
+	}
+
+	.modal-enter, .modal-leave-to {
+		opacity: 0;
+	}
+
   .card {
 		margin-left: 20px;
 		margin-top: 20px;

@@ -9,12 +9,14 @@ export default new Vuex.Store({
 			{
 				id: 1,
 				content: 'お菓子かう',
-				timelimit: '3月15日'
+				timelimit: '3月15日',
+				editContent: '',
 			},
 			{
 				id: 2,
 				content: '本を買う',
-				timelimit: '3月15日'
+				timelimit: '3月15日',
+				editContent: '',
 			}
 		],
 		nextTaskId: 3,
@@ -28,6 +30,9 @@ export default new Vuex.Store({
 			})
 			state.nextTaskId++
 		},
+		editTodo (state, { editContent }) {
+			state.todos.content = editContent
+		}
 	}
 })
 
