@@ -4,19 +4,19 @@
     <div class="modal-wrapper" @click.self="$emit('close')">
       <div class="modal-container">
 
-			  <div class="modal-header">
-				  {{ id }}:編集
-				  {{ timelimit }}
-				  {{content}}
-			  </div>
+        <div class="modal-header">
+          {{ id }}:編集
+          {{ timelimit }}
+	        {{content}}
+					{{ edit }}
+        </div>
 
 			  <div class="modal-form">
 				  <b-input-group class="mb-2">
 				  <b-form-input 
 					  type="text" 
 					  placeholder="やりたいことを入力してください"
-				    :value="content"
-					  @input="$emit('input', $event)"
+						v-model="edit"
 				  >
 				  </b-form-input>
 				  <b-form-datepicker 
@@ -25,6 +25,7 @@
 					  :value="timelimit"
 				  >
 				  </b-form-datepicker>
+				
 			  </b-input-group>
 			  </div>
 
@@ -49,17 +50,14 @@ export default {
   deta () {
 		return {
 			closeModal: false,
-			text: this.content
+			'edit': this.content.edit
 		}
 	},
 	methods: {
-		editTodo() {
-			this.$store.commit ('editTodo',{
-				// editContent: this.editContent
-			})
-		},
-    onInput($event) {
-			
+    editTodo () {
+				this.$store.commit('editTodo'), {
+					editContent: this.edit
+			}
 		}
 	},
 	computed: {

@@ -27,6 +27,7 @@
 				<template v-slot:footer>
 					期限：{{ todo.timelimit }}
 				</template>
+				{{editContent}}
 			
 			</b-card>
     </b-row>
@@ -39,6 +40,7 @@
 			  v-if="showContent" 
 				@close="modalClose"
 				v-model="editContent"
+				@editTodo="editTodo"
 			/>
 		</transition>
   </b-container>
@@ -73,6 +75,12 @@ export default {
 			this.todoTimelimit = todo.timelimit
 			this.todoContent = todo.content
 			// this.$bvModal.show('test-open-modal')
+		},
+		editTodo (id) {
+			const index = this.todos.findIndex((item) => item.id == id)
+			this.$store.commit('editTodo'), {
+        editContent: this.editContent
+			}
 		},
     // testModal (id) {
 		// 	this.$bvModal.show('test-open-modal', id)
