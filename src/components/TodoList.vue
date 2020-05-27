@@ -1,12 +1,13 @@
 <template>
 <div>
+	<todo-filter/>
   <b-container fluid class="bv-example-row">
     <b-row>
 			<b-card
 				border-variant="secondary"
 				footer-border-variant="secondary"
 				align="center"
-				v-for="todo in todos" 
+				v-for="todo in todosFilter" 
 				:key="todo.id" 
 				:content="todo.content"
 				:timelimit="todo.timelimit"
@@ -19,29 +20,27 @@
 					<b-button variant="outline-danger" @click="removeTodo(todo.id)">
 						削除
 					</b-button>
-					<b-button variant="outline-success">
+					<b-button variant="outline-success" @click="completeTodo(todo.id)">
 						完了
 					</b-button>
 				</template>
-				<b-card-text>{{ todo.content }}</b-card-text>
-				<template v-slot:footer>
-					期限：{{ todo.timelimit }}
+				<b-card-text :class="{ content : todo.status }">{{ todo.content }}</b-card-text>
+				<template v-slot:footer >
+				  <p :class="{ content : todo.status }">期限：{{ todo.timelimit | moment }}</p>	
+	
 				</template>
-				{{editContent}}
-			
 			</b-card>
     </b-row>
 		<transition name="modal">
 			<show-modal 
 			  :id="todoId"
-			  :timelimit="todoTimelimit"
-				:content="todoContent"
+			  :timelimit.sync="todoTimelimit"
+				:content.sync="todoContent"
 			  v-if="showContent" 
 				@close="modalClose"
 				v-model="editContent"
 				@edit="editTodo($event)"
 			/>
-
 		</transition>
   </b-container>
 </div>
@@ -49,10 +48,14 @@
 
 <script>
 import ShowModal from './ShowModal'
+import TodoFilter from './TodoFilter'
+import moment from 'moment'
+
 export default {
 	name: 'todo-list',
 	components: {
 		ShowModal,
+		TodoFilter,
 	},
   data () {
     return {
@@ -64,8 +67,8 @@ export default {
 		}
 	},
 	computed: {
-    todos () {
-			return this.$store.state.todos
+    todosFilter () {
+			return this.$store.getters.todosFilter
 		}
 	},
 	methods: {
@@ -76,9 +79,10 @@ export default {
 			this.todoContent = todo.content
 		},
 		editTodo (e) {
-			alert(e)
+			console.log(e)
 			this.$store.commit('editTodo', {
-				newContent: this.editContent,
+				newContent: this.todoContent,
+				newTimelimit: this.todoTimelimit,
 				id: e
 			})
 			// this.editContent = this.todo.content
@@ -88,7 +92,19 @@ export default {
 		},
 		removeTodo(id) {
 			this.$store.commit('deleteTodo', id)
+		},
+		completeTodo(id) {
+			this.$store.commit('completeTodo', id)
 		}
+	},
+	filters: {
+		moment: function(date) {
+			if ( moment(date).isAfter() ) {
+				return moment(date).format('YYYY年MM月DD日')
+			} else {
+				return moment(date).format('YYYY年MM月DD日')
+			}
+		},
 	}
 }
 </script>
@@ -109,5 +125,14 @@ export default {
 
 	.modal-content {
 		margin-top: 100px;
+	}
+
+	.content { 
+		text-decoration: line-through;
+		color: gray;
+	}
+
+	.style-danger {
+		color: red
 	}
 </style>

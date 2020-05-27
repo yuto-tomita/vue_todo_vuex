@@ -4,7 +4,6 @@
       TodoList
     </h1>
     <todo-input></todo-input>
-    <todo-filter></todo-filter>
     <todo-list></todo-list>
   </div>
 </template>

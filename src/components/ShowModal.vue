@@ -15,13 +15,15 @@
 				  <b-form-input 
 					  type="text" 
 					  placeholder="やりたいことを入力してください"
-						@input="onInput"
+						@input="$emit('update:content', $event)"
 						:value="content"	
 				  >
 				  </b-form-input>
 				  <b-form-datepicker 
 					  class="mb-2" 
 					  placeholder="何日までに行いますか？"
+						:value="timelimit"
+						@input="$emit('update:timelimit', $event)"
 				  >
 				  </b-form-datepicker>
 			  </b-input-group>
@@ -52,9 +54,9 @@ export default {
 			this.$emit('edit', id)
 			this.$emit('close')
 		},
-		onInput(e) {
-			this.$emit('input', e)
-		}
+		// onInput(e) {
+		// 	this.$emit('input', e)
+		// }
 	}
 }
 </script>
