@@ -7,8 +7,7 @@
         <div class="modal-header">
           {{ id }}:編集
           {{ timelimit }}
-	        {{content}}
-					{{ edit }}
+	        {{ content }}
         </div>
 
 			  <div class="modal-form">
@@ -16,21 +15,20 @@
 				  <b-form-input 
 					  type="text" 
 					  placeholder="やりたいことを入力してください"
-						v-model="edit"
+						@input="onInput"
+						:value="content"	
 				  >
 				  </b-form-input>
 				  <b-form-datepicker 
 					  class="mb-2" 
 					  placeholder="何日までに行いますか？"
-					  :value="timelimit"
 				  >
 				  </b-form-datepicker>
-				
 			  </b-input-group>
 			  </div>
 
 			  <div class="modal-footer">
-				  <button @click="editTodo">OK</button>
+				  <button @click="edit(id)">OK</button>
 				  <button @click="$emit('close')">Close</button>
 			  </div>
 		  </div>
@@ -42,27 +40,20 @@
 <script>
 export default {
 	name: 'show-modal',
-	props: {
-		id: { type: Number, required: true},
-		timelimit: {type: String, required: true},
-		content: {type: String, required: true}		
-	}, 
+	props: ['id', 'timelimit', 'content']	,
   deta () {
 		return {
 			closeModal: false,
-			'edit': this.content.edit
+			text: '',
 		}
 	},
 	methods: {
-    editTodo () {
-				this.$store.commit('editTodo'), {
-					editContent: this.edit
-			}
-		}
-	},
-	computed: {
-		todos () {
-			return this.$store.state.todos
+		edit(id) {
+			this.$emit('edit', id)
+			this.$emit('close')
+		},
+		onInput(e) {
+			this.$emit('input', e)
 		}
 	}
 }

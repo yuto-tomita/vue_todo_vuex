@@ -10,13 +10,11 @@ export default new Vuex.Store({
 				id: 1,
 				content: 'お菓子かう',
 				timelimit: '3月15日',
-				editContent: '',
 			},
 			{
 				id: 2,
 				content: '本を買う',
 				timelimit: '3月15日',
-				editContent: '',
 			}
 		],
 		nextTaskId: 3,
@@ -30,10 +28,16 @@ export default new Vuex.Store({
 			})
 			state.nextTaskId++
 		},
-		editTodo (state, { editContent }) {
-			editContent = state.todos.content
+		editTodo (state, { newContent, id }) {
+			const index = state.todos.findIndex(item => item.id == id )
+			console.log(index)
+			state.todos[index].content = newContent
+		},
+		deleteTodo(state, id) {
+			const index = state.todos.findIndex(item => item.id == id)
+			state.todos.splice(index, 1)
 		}
-	}
+	},
 })
 
 

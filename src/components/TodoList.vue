@@ -12,11 +12,11 @@
 				:timelimit="todo.timelimit"
 			>
 			  <template v-slot:header>
-					<b-button variant="outline-info" @click="testOpenModal(todo)">
+					<b-button variant="outline-info" @click="openModal(todo)">
 						編集
 						<!-- @click="this.$bvModal.show(todo)" -->
 					</b-button>
-					<b-button variant="outline-danger">
+					<b-button variant="outline-danger" @click="removeTodo(todo.id)">
 						削除
 					</b-button>
 					<b-button variant="outline-success">
@@ -32,7 +32,6 @@
 			</b-card>
     </b-row>
 		<transition name="modal">
-			<!-- v-modelでモーダルの入力フォームの値を受けとる -->
 			<show-modal 
 			  :id="todoId"
 			  :timelimit="todoTimelimit"
@@ -40,8 +39,9 @@
 			  v-if="showContent" 
 				@close="modalClose"
 				v-model="editContent"
-				@editTodo="editTodo"
+				@edit="editTodo($event)"
 			/>
+
 		</transition>
   </b-container>
 </div>
@@ -69,24 +69,25 @@ export default {
 		}
 	},
 	methods: {
-		testOpenModal (todo) {
+		openModal (todo) {
 			this.showContent = true
 			this.todoId = todo.id
 			this.todoTimelimit = todo.timelimit
 			this.todoContent = todo.content
-			// this.$bvModal.show('test-open-modal')
 		},
-		editTodo (id) {
-			const index = this.todos.findIndex((item) => item.id == id)
-			this.$store.commit('editTodo'), {
-        editContent: this.editContent
-			}
+		editTodo (e) {
+			alert(e)
+			this.$store.commit('editTodo', {
+				newContent: this.editContent,
+				id: e
+			})
+			// this.editContent = this.todo.content
 		},
-    // testModal (id) {
-		// 	this.$bvModal.show('test-open-modal', id)
-		// },
 		modalClose () {
 			this.showContent = false
+		},
+		removeTodo(id) {
+			this.$store.commit('deleteTodo', id)
 		}
 	}
 }
