@@ -65,10 +65,10 @@ export default {
     todosFilter () {
 			return this.$store.getters.todosFilter
 		},
-		mounted () {
-      this.$store.dispatch('restore')
-    },
 	},
+	mounted () {
+		this.$store.dispatch('restore')
+  },
 	methods: {
 		openModal (todo) {
 			this.showContent = true

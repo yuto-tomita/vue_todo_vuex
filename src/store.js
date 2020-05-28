@@ -34,12 +34,14 @@ export default new Vuex.Store({
 			const index = state.todos.findIndex(item => item.id == id )
 			state.todos[index].content = newContent
 			state.todos[index].timelimit = newTimelimit
+			// stateの内容を更新した上でlocalstrageのstateの状態も更新する
+			localStorage.setItem('todo-app-data', JSON.stringify(state))
 		},
 		deleteTodo(state, id) {
 			const index = state.todos.findIndex(item => item.id == id)
 			state.todos.splice(index, 1)
-			// 削除ボタンを押したらtodoの状態をローカルストレージにも保存する
-			localStorage.setItem('todo-app-data', JSON.stringify(state.todos))
+			// 削除ボタンを押したらローカルストレージ上の値も削除されるようにする
+			localStorage.setItem('todo-app-data', JSON.stringify(state))
 		},
 		completeTodo(state, id) {
 			const index = state.todos.findIndex(item => item.id == id)
