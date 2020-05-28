@@ -46,6 +46,12 @@ export default new Vuex.Store({
 		completeTodo(state, id) {
 			const index = state.todos.findIndex(item => item.id == id)
 			state.todos[index].status = true
+			localStorage.setItem('todo-app-data', JSON.stringify(state))
+		},
+		notCompleteTodo(state, id) {
+			const index = state.todos.findIndex(item => item.id == id)
+			state.todos[index].status = false
+			localStorage.setItem('todo-app-data', JSON.stringify(state))
 		},
 		updateFilter(state, filter) {
 			state.filter = filter

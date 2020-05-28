@@ -4,7 +4,7 @@
       <div class="modal-wrapper" @click.self="$emit('close')">
         <div class="modal-container">
           <div class="modal-header">
-            {{id}} 編集
+            編集
           </div>
           <div class="modal-form">
             <b-input-group class="mb-2">
