@@ -1,14 +1,16 @@
 <template>
 	<div>
-    <b-input-group class="mb-2">
-      <b-form-input 
-			  type="text" 
-				placeholder="やりたいことを入力してください"
-				v-model="userContent"
-				>
-			</b-form-input>
-			<b-form-datepicker class="mb-2" placeholder="何日までに行いますか？" v-model="userTimelimit"></b-form-datepicker>
-    </b-input-group>
+		<b-container fluid>
+			<b-input-group class="mb-2">
+				<b-form-input 
+					type="text" 
+					placeholder="やりたいことを入力してください"
+					v-model="userContent"
+					>
+				</b-form-input>
+				<b-form-datepicker class="mb-2" placeholder="何日までに行いますか？" v-model="userTimelimit"></b-form-datepicker>
+			</b-input-group>
+		</b-container>
 		<b-button variant="outline-info" class="mb-2" @click="addTodo($event); save($event)">
       <b-icon icon="check-box" aria-hidden="true" :class="{ error : error }"></b-icon>追加
     </b-button>
