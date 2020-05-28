@@ -1,49 +1,44 @@
 <template>
-<div>
-	<todo-filter/>
-  <b-container fluid class="bv-example-row">
-    <b-row>
-			<b-card
-				border-variant="secondary"
-				footer-border-variant="secondary"
-				align="center"
-				v-for="todo in todosFilter" 
-				:key="todo.id" 
-				:content="todo.content"
-				:timelimit="todo.timelimit"
-			>
-			  <template v-slot:header>
-					<b-button variant="outline-info" @click="openModal(todo)">
-						編集
-						<!-- @click="this.$bvModal.show(todo)" -->
-					</b-button>
-					<b-button variant="outline-danger" @click="removeTodo(todo.id)">
-						削除
-					</b-button>
-					<b-button variant="outline-success" @click="completeTodo(todo.id)">
-						完了
-					</b-button>
-				</template>
-				<b-card-text :class="{ content : todo.status }">{{ todo.content }}</b-card-text>
-				<template v-slot:footer >
-				  <p :class="{ content : todo.status }">期限：{{ todo.timelimit | moment }}</p>	
-	
-				</template>
-			</b-card>
-    </b-row>
-		<transition name="modal">
-			<show-modal 
-			  :id="todoId"
-			  :timelimit.sync="todoTimelimit"
-				:content.sync="todoContent"
-			  v-if="showContent" 
-				@close="modalClose"
-				v-model="editContent"
-				@edit="editTodo($event)"
-			/>
-		</transition>
-  </b-container>
-</div>
+  <div>
+    <todo-filter />
+    <b-container fluid class="bv-example-row">
+      <b-row>
+        <b-card
+          border-variant="secondary"
+          footer-border-variant="secondary"
+          align="center"
+          v-for="todo in todosFilter"
+          :key="todo.id"
+          :content="todo.content"
+          :timelimit="todo.timelimit"
+        >
+          <template v-slot:header>
+            <b-button variant="outline-info" @click="openModal(todo)">
+              編集
+              <!-- @click="this.$bvModal.show(todo)" -->
+            </b-button>
+            <b-button variant="outline-danger" @click="removeTodo(todo.id)">削除</b-button>
+            <b-button variant="outline-success" @click="completeTodo(todo.id)">完了</b-button>
+          </template>
+          <b-card-text :class="{ content : todo.status }">{{ todo.content }}</b-card-text>
+          <template v-slot:footer>
+            <p :class="{ content : todo.status }">期限：{{ todo.timelimit | moment }}</p>
+          </template>
+        </b-card>
+      </b-row>
+      <transition name="modal">
+        <show-modal
+          :id="todoId"
+          :timelimit.sync="todoTimelimit"
+          :content.sync="todoContent"
+          v-if="showContent"
+          @close="modalClose"
+          v-model="editContent"
+          @edit="editTodo($event)"
+        />
+      </transition>
+    </b-container>
+  </div>
 </template>
 
 <script>
@@ -69,7 +64,10 @@ export default {
 	computed: {
     todosFilter () {
 			return this.$store.getters.todosFilter
-		}
+		},
+		mounted () {
+      this.$store.dispatch('restore')
+    },
 	},
 	methods: {
 		openModal (todo) {
@@ -110,29 +108,31 @@ export default {
 </script>
 
 <style>
-  .modal-enter-active, .modal-leave-active {
-		transition: opacity .5s;
-	}
+.modal-enter-active,
+.modal-leave-active {
+  transition: opacity 0.5s;
+}
 
-	.modal-enter, .modal-leave-to {
-		opacity: 0;
-	}
+.modal-enter,
+.modal-leave-to {
+  opacity: 0;
+}
 
-  .card {
-		margin-left: 20px;
-		margin-top: 20px;
-	}
+.card {
+  margin-left: 20px;
+  margin-top: 20px;
+}
 
-	.modal-content {
-		margin-top: 100px;
-	}
+.modal-content {
+  margin-top: 100px;
+}
 
-	.content { 
-		text-decoration: line-through;
-		color: gray;
-	}
+.content {
+  text-decoration: line-through;
+  color: gray;
+}
 
-	.style-danger {
-		color: red
-	}
+.style-danger {
+  color: red;
+}
 </style>

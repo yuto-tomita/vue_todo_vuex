@@ -19,7 +19,7 @@ export default {
     TodoInput,   
     TodoList,
     TodoFilter
-  }
+  },
 }
 </script>
 

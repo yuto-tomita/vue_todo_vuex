@@ -1,27 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import moment from 'moment'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
 	state: {
 		filter: 'all',
-		todos: [
-			{
-				id: 1,
-				content: 'お菓子かう',
-				timelimit: '3月15日',
-				status: false
-			},
-			{
-				id: 2,
-				content: '本を買う',
-				timelimit: '3月15日',
-				status: false
-			}
-		],
-		nextTaskId: 3,
+		todos: [],
+		nextTaskId: 1,
 	},
 	getters: {
 		todosFilter(state) {
@@ -52,6 +38,8 @@ export default new Vuex.Store({
 		deleteTodo(state, id) {
 			const index = state.todos.findIndex(item => item.id == id)
 			state.todos.splice(index, 1)
+			// 削除ボタンを押したらtodoの状態をローカルストレージにも保存する
+			localStorage.setItem('todo-app-data', JSON.stringify(state.todos))
 		},
 		completeTodo(state, id) {
 			const index = state.todos.findIndex(item => item.id == id)
@@ -59,8 +47,27 @@ export default new Vuex.Store({
 		},
 		updateFilter(state, filter) {
 			state.filter = filter
+		},
+		restore (state, { todos, nextTaskId }) {
+			state.todos = todos
+			state.nextTaskId = nextTaskId 
 		}
 	},
+	actions: {
+		save ({state}) {
+			const data = {
+				todos: state.todos,
+				nextTaskId: state.nextTaskId
+			}
+			localStorage.setItem('todo-app-data', JSON.stringify(data))
+		},
+		restore ({commit}) {
+			const data = localStorage.getItem('todo-app-data')
+			if (data) {
+				commit('restore', JSON.parse(data) )
+			}
+		}
+	}
 })
 
 
