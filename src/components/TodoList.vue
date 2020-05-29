@@ -15,7 +15,6 @@
           <template v-slot:header>
             <b-button variant="outline-info" @click="openModal(todo)">
               編集
-              <!-- @click="this.$bvModal.show(todo)" -->
             </b-button>
             <b-button variant="outline-danger" @click="removeTodo(todo.id)">削除</b-button>
 
@@ -23,7 +22,7 @@
 						  @click="completeTodo(todo.id)"
 							:class="{ 'complete-button' : todo.status }"
 						>
-							完了
+							
 						</b-button>
 
 						<b-button variant="outline-success" 
