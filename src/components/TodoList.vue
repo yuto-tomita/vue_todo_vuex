@@ -22,7 +22,7 @@
 						  @click="completeTodo(todo.id)"
 							:class="{ 'complete-button' : todo.status }"
 						>
-							
+							完了
 						</b-button>
 
 						<b-button variant="outline-success" 
