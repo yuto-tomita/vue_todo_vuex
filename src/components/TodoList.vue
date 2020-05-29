@@ -19,12 +19,12 @@
             <b-button
               variant="outline-success"
               @click="completeTodo(todo.id)"
-              :class="{ 'complete-button' : todo.status }"
+              :class="{ complete : todo.status }"
             >完了</b-button>
 
             <b-button
               variant="outline-success"
-              :class="{ 'not-complete-button' : !todo.status }"
+              :class="{ notcomplete : !todo.status }"
               @click="notCompleteTodo(todo.id)"
             >完了を取り消す</b-button>
           </template>
@@ -143,15 +143,11 @@ export default {
   color: gray;
 }
 
-.style-danger {
-  color: red;
-}
-
-.complete-button {
+.complete {
   display: none;
 }
 
-.not-complete-button {
+.notcomplete {
   display: none;
 }
 </style>
