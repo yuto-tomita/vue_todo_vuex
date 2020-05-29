@@ -13,25 +13,20 @@
           :timelimit="todo.timelimit"
         >
           <template v-slot:header>
-            <b-button variant="outline-info" @click="openModal(todo)">
-              編集
-            </b-button>
+            <b-button variant="outline-info" @click="openModal(todo)">編集</b-button>
             <b-button variant="outline-danger" @click="removeTodo(todo.id)">削除</b-button>
 
-            <b-button variant="outline-success" 
-						  @click="completeTodo(todo.id)"
-							:class="{ 'complete-button' : todo.status }"
-						>
-							完了
-						</b-button>
+            <b-button
+              variant="outline-success"
+              @click="completeTodo(todo.id)"
+              :class="{ 'complete-button' : todo.status }"
+            >完了</b-button>
 
-						<b-button variant="outline-success" 
-						  :class="{ 'not-complete-button' : !todo.status }"
-							@click="notCompleteTodo(todo.id)"
-						>
-							完了を取り消す
-						</b-button>
-
+            <b-button
+              variant="outline-success"
+              :class="{ 'not-complete-button' : !todo.status }"
+              @click="notCompleteTodo(todo.id)"
+            >完了を取り消す</b-button>
           </template>
           <b-card-text :class="{ content : todo.status }">{{ todo.content }}</b-card-text>
           <template v-slot:footer>
@@ -153,10 +148,10 @@ export default {
 }
 
 .complete-button {
-	display: none;
+  display: none;
 }
 
 .not-complete-button {
-	display: none;
+  display: none;
 }
 </style>
