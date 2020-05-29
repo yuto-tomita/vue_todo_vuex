@@ -24,8 +24,8 @@
           </div>
 
           <div class="modal-footer">
-            <button @click="edit(id)">OK</button>
-            <button @click="$emit('close')">Close</button>
+            <b-button variant="outline-success" @click="edit(id)">OK</b-button>
+            <b-button variant="outline-danger" @click="$emit('close')">Close</b-button>
           </div>
         </div>
       </div>
@@ -88,5 +88,6 @@ export default {
   position: absolute;
   bottom: 40px;
   right: 40px;
+  border: none;
 }
 </style>
