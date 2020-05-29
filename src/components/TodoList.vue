@@ -16,7 +16,7 @@
             <b-button variant="outline-info" @click="openModal(todo)">編集</b-button>
             <b-button variant="outline-danger" @click="removeTodo(todo.id)">削除</b-button>
 						
-						<div v-if="!todo.status">
+						<div v-if="!todo.status" class="complete-button">
 							<b-button
 								variant="outline-success"
 								@click="completeTodo(todo.id)"
@@ -24,7 +24,7 @@
 							>完了</b-button>
 						</div>
 
-						<div v-else>
+						<div v-else class="notcomplete-button">
 							<b-button 
 								variant="outline-success"
 								:class="{ notcomplete : !todo.status }"
@@ -147,6 +147,14 @@ export default {
   color: gray;
 }
 
+.complete-button {
+	display: inline;
+}
+
+.notcomplete-button {
+	display: inline;
+}
+
 .complete {
   display: none;
 }
@@ -154,4 +162,5 @@ export default {
 .notcomplete {
   display: none;
 }
+
 </style>
