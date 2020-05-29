@@ -15,18 +15,22 @@
           <template v-slot:header>
             <b-button variant="outline-info" @click="openModal(todo)">編集</b-button>
             <b-button variant="outline-danger" @click="removeTodo(todo.id)">削除</b-button>
+						
+						<div v-if="!todo.status">
+							<b-button
+								variant="outline-success"
+								@click="completeTodo(todo.id)"
+								:class="{ complete : todo.status }"
+							>完了</b-button>
+						</div>
 
-            <b-button
-              variant="outline-success"
-              @click="completeTodo(todo.id)"
-              :class="{ complete : todo.status }"
-            >完了</b-button>
-
-            <b-button
-              variant="outline-success"
-              :class="{ notcomplete : !todo.status }"
-              @click="notCompleteTodo(todo.id)"
-            >完了を取り消す</b-button>
+						<div v-else>
+							<b-button 
+								variant="outline-success"
+								:class="{ notcomplete : !todo.status }"
+								@click="notCompleteTodo(todo.id)"
+							>完了を取り消す</b-button>
+						</div>
           </template>
           <b-card-text :class="{ content : todo.status }">{{ todo.content }}</b-card-text>
           <template v-slot:footer>
